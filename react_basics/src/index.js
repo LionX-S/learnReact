@@ -7,7 +7,13 @@ import ReactDOM from 'react-dom';
 // import App from './01_base/05.事件绑定';
 // import App from './01_base/06.ref';
 // import App from './01_base/07.state';
-import App from './01_base/08.循环渲染';
+// import App from './01_base/08.循环渲染';
+// import App from './01_base/09.todoList';
+// import App from './01_base/10.电影选项卡';
+// import App from './01_base/11.setState同步异步';
+// import App from './01_base/14.受控组件';
+// import App from './01_base/15.父子组件通信';
+import App from './01_base/16.父子通信表单域组件';
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
