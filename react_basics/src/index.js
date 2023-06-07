@@ -13,7 +13,12 @@ import ReactDOM from 'react-dom';
 // import App from './01_base/11.setState同步异步';
 // import App from './01_base/14.受控组件';
 // import App from './01_base/15.父子组件通信';
-import App from './01_base/16.父子通信表单域组件';
+// import App from './01_base/16.父子通信表单域组件';
+// import App from './01_base/17.状态提升';
+// import App from './01_base/18.context';
+// import App from './01_base/19.插槽';
+// import App from './01_base/20.生命周期';
+import App from './01_base/21.shouldUpdate案例';
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 

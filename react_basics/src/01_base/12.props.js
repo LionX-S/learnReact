@@ -4,7 +4,9 @@ import NavBar from './NavBar';
 export default class App extends Component {
   render() {
     return (
-      <div>App</div>
+      <div>
+        <NavBar/>
+      </div>
     )
   }
 }
