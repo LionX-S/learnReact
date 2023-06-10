@@ -18,7 +18,19 @@ import ReactDOM from 'react-dom';
 // import App from './01_base/18.context';
 // import App from './01_base/19.插槽';
 // import App from './01_base/20.生命周期';
-import App from './01_base/21.shouldUpdate案例';
+// import App from './01_base/21.shouldUpdate案例';
+// import App from './01_base/22.getDerivedStateFromProps';
+// import App from './01_base/23.getSnapShotBeforeUpdate';
+// import App from './01_base/24.性能优化';
+// import App from './01_base/25.swiper组件';
+// import App from './02_hooks/1.useState';
+// import App from './02_hooks/3.useEffect2';
+// import App from './02_hooks/4.useCallback';
+// import App from './02_hooks/5.useMemo';
+// import App from './02_hooks/6.useRef';
+// import App from './02_hooks/7.useContext';
+// import App from './02_hooks/8.useReducer';
+import App from './02_hooks/9.useReducer2';
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
