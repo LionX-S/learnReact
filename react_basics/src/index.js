@@ -31,7 +31,8 @@ import ReactDOM from 'react-dom';
 // import App from './02_hooks/7.useContext';
 // import App from './02_hooks/8.useReducer';
 // import App from './02_hooks/9.useReducer2';
-import App from './03_router/App';
+// import App from './03_router/App';
+import App from './04_redux/App';
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
