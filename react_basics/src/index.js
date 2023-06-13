@@ -1,5 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import store from './05_react-redux/redux/store';
 // import App from './01_base/01.class_component';
 // import App from './01_base/02.function_component';
 // import App from './01_base/03.嵌套组件';
@@ -32,7 +34,8 @@ import ReactDOM from 'react-dom';
 // import App from './02_hooks/8.useReducer';
 // import App from './02_hooks/9.useReducer2';
 // import App from './03_router/App';
-import App from './04_redux/App';
+// import App from "./04_redux/App";
+import App from "./05_react-redux/App";
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
@@ -42,4 +45,9 @@ import App from './04_redux/App';
 //   className:'bb'
 // },"1111"),document.getElementById('root'));
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById("root")
+);
