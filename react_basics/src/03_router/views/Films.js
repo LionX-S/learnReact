@@ -6,7 +6,7 @@ import Living from "./films/Living";
 export default function Films() {
 	return (
 		// {/*嵌套路由*/}
-		<div>
+		<div style={{height:'300px'}}>
 			Films
 			<Switch>
 				<Route

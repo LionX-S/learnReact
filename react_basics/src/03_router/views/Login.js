@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-export default function Login() {
+export default function Login(props) {
+  useEffect(() => {
+    console.log(props);
+  },[])
   return (
     <div>Login</div>
   )
