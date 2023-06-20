@@ -36,7 +36,8 @@ import store from './05_react-redux/redux/store';
 // import App from './03_router/App';
 // import App from "./04_redux/App";
 // import App from "./05_react-redux/App";
-import App from './06_react-test/App'
+// import App from './06_react-test/App'
+import App from './07_react补充/1.portal'
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
