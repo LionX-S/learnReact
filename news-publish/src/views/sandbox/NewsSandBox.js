@@ -21,7 +21,8 @@ export default function NewsSendBox() {
 					style={{
 						margin: "24px 16px",
 						padding: 24,
-						minHeight: 280
+						minHeight: 280,
+						overflow:'auto'
 					}}>
 					<Switch>
 						<Route
@@ -33,11 +34,11 @@ export default function NewsSendBox() {
 							component={UserList}
 						/>
 						<Route
-							path='/right-manage/role/list'
+							path='/user-manage/role/list'
 							component={RoleList}
 						/>
 						<Route
-							path='/user-manage/right/list'
+							path='/right-manage/right/list'
 							component={RightList}
 						/>
 						<Redirect

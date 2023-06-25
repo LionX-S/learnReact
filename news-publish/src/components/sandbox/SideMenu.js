@@ -13,7 +13,7 @@ import {
 const { Sider } = Layout;
 
 // 因为antd采用了新版的写法，所以做下数据改造
-function getItem({ title, key, children }) {
+function getItem({ title, key, children, pagepermisson }) {
 	const iconList = {
 		"/home": <HomeOutlined />,
 		"/user-manage": <UserOutlined />,
@@ -27,22 +27,31 @@ function getItem({ title, key, children }) {
 		children
 			.filter((item) => item.pagepermisson === 1)
 			.map((item) => getItem(item));
-	return newChildren && newChildren.length === 0
-		? {
-				key,
-				icon: iconList[key],
-				label: title
-		  }
-		: {
-				key,
-				icon: iconList[key],
-				children: newChildren,
-				label: title
-		  };
+	if (pagepermisson === 1) {
+		return newChildren && newChildren.length === 0
+			? {
+					key,
+					icon: iconList[key],
+					label: title
+			  }
+			: {
+					key,
+					icon: iconList[key],
+					children: newChildren,
+					label: title
+			  };
+	}
 }
 
 // submenu keys of first level
-const rootSubmenuKeys = ['/home','/user-manage',"/right-manage","/news-manage","/audit-manage","/publish-manage"];
+const rootSubmenuKeys = [
+	"/home",
+	"/user-manage",
+	"/right-manage",
+	"/news-manage",
+	"/audit-manage",
+	"/publish-manage"
+];
 function SideMenu(props) {
 	useEffect(() => {
 		axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
