@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Tree } from "antd";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Table, Button, Modal, Switch } from "antd";
 import axios from "axios";
 import {
 	DeleteOutlined,
@@ -7,21 +7,48 @@ import {
 	ExclamationCircleOutlined
 } from "@ant-design/icons";
 
-export default function UserList() {
+import UserForm from "../../../components/user-manage/UserForm";
+
+const UserList = React.memo(() => {
 	const [dataSource, setDataSource] = useState([]);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [rightList, setRightList] = useState([]);
-	const [checkPermission, setCheckPermission] = useState([]);
-	const [updateTreeId, setUpdateTreeId] = useState(0);
+	const [isModalOpen, setIModalOpen] = useState(false);
+	const [regionList, setRegionList] = useState([]);
+	const [roleList, setRoleList] = useState([]);
+	const formRef = useRef(null);
 
 	const columns = [
 		{
-			title: "ID",
-			dataIndex: "id"
+			title: "区域",
+			dataIndex: "region",
+			render: (region) => {
+				return region ? region : "全球";
+			}
 		},
 		{
 			title: "角色名称",
-			dataIndex: "roleName"
+			dataIndex: "role",
+			render: (role) => {
+				return role.roleName;
+			}
+		},
+		{
+			title: "用户名",
+			dataIndex: "username"
+		},
+		{
+			title: "用户状态",
+			dataIndex: "roleState",
+			render: (roleState, item) => {
+				return (
+					<Switch
+						checked={roleState}
+						disabled={item.default}
+						onChange={() => {
+							handleChangeSwitch(item);
+						}}
+					/>
+				);
+			}
 		},
 		{
 			title: "操作",
@@ -34,16 +61,16 @@ export default function UserList() {
 							onClick={() => {
 								confirmDelete(item);
 							}}
+							disabled={item.default}
 							icon={<DeleteOutlined />}
 						/>
 						<Button
 							type='primary'
 							shape='circle'
 							onClick={() => {
-								showModal();
-								checkRights(item);
-								setUpdateTreeId(item.id);
+								handleUpdate(item);
 							}}
+							disabled={item.default}
 							icon={<EditOutlined />}
 						/>
 					</div>
@@ -52,14 +79,20 @@ export default function UserList() {
 		}
 	];
 	useEffect(() => {
-		axios.get("http://localhost:5000/roles").then((res) => {
+		axios.get("http://localhost:5000/users?_expand=role").then((res) => {
 			setDataSource(res.data);
 		});
 	}, []);
 
 	useEffect(() => {
-		axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
-			setRightList(res.data);
+		axios.get("http://localhost:5000/regions").then((res) => {
+			setRegionList(res.data);
+		});
+	}, []);
+
+	useEffect(() => {
+		axios.get("http://localhost:5000/roles").then((res) => {
+			setRoleList(res.data);
 		});
 	}, []);
 
@@ -75,59 +108,95 @@ export default function UserList() {
 			}
 		});
 	};
-	const deleteItem = (item) => {
-		setDataSource(dataSource.filter((data) => data.id !== item.id));
-		axios.delete(`http://localhost:5000/roles/${item.id}`);
-	};
+	const deleteItem = useCallback(
+		(item) => {
+			setDataSource(dataSource.filter((data) => data.id !== item.id));
+			axios.delete(`http://localhost:5000/users/${item.id}`);
+		},
+		[dataSource]
+	);
 
-	const onCheck = (item) => {
-		setCheckPermission(item);
-	};
-	const checkRights = (item) => {
-		setCheckPermission(item.rights);
-	};
 	const showModal = () => {
-		setIsModalOpen(true);
+		setIModalOpen(true);
 	};
 	const handleOk = () => {
-		setIsModalOpen(false);
-		setDataSource(
-			dataSource.map((data) => {
-				if (data.id === updateTreeId) {
-					return {
-						...data,
-						rights: checkPermission
-					};
-				}
-				return data;
+		formRef.current
+			.validateFields()
+			.then((value) => {
+				setIModalOpen(false);
+				axios
+					.post("http://localhost:5000/users", {
+						...value,
+						roleState: true,
+						default: false
+					})
+					.then((res) =>
+						setDataSource([
+							...dataSource,
+							{
+								...res.data,
+								role: roleList.filter((item) => item.id === value.roleId)[0]
+							}
+						])
+					);
+				formRef.current.resetFields();
 			})
-		);
-    axios.patch(`http://localhost:5000/roles/${updateTreeId}`,{
-      rights: checkPermission
-    })
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 	const handleCancel = () => {
-		setIsModalOpen(false);
+		setIModalOpen(false);
+	};
+
+	const handleChangeSwitch = (value) => {
+		value.roleState = !value.roleState;
+		setDataSource([...dataSource]);
+		axios.patch(`http://localhost:5000/users/${value.id}`, {
+			roleState: value.roleState
+		});
+	};
+
+	const handleUpdate = async (item) => {
+		const { username, password, region, roleId } = item;
+		await showModal();
+		formRef.current.setFieldsValue({
+			username,
+			password,
+			region,
+			roleId
+		});
 	};
 	return (
 		<div>
+			<Button
+				type='primary'
+				onClick={showModal}>
+				添加用户
+			</Button>
 			<Table
 				dataSource={dataSource}
 				columns={columns}
+				pagination={{
+					pageSize: 5
+				}}
 				rowKey={(item) => item.id}
 			/>
 			<Modal
-				title='权限分配'
+				title='新增用户'
 				open={isModalOpen}
+				okText='确定'
+				cancelText='取消'
 				onOk={handleOk}
 				onCancel={handleCancel}>
-				<Tree
-					checkable
-					checkedKeys={checkPermission}
-					onCheck={onCheck}
-					treeData={rightList}
+				<UserForm
+					regionList={regionList}
+					roleList={roleList}
+					ref={formRef}
 				/>
 			</Modal>
 		</div>
 	);
-}
+});
+
+export default UserList;

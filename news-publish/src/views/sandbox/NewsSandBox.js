@@ -34,7 +34,7 @@ export default function NewsSendBox() {
 							component={UserList}
 						/>
 						<Route
-							path='/user-manage/role/list'
+							path='/right-manage/role/list'
 							component={RoleList}
 						/>
 						<Route
