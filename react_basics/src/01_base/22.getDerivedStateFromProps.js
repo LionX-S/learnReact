@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class App extends Component {
 	state = {
-		name: "fredy"
+		name: ""
 	};
   // 功能一：相当于替代了componentWillMount的作用，render前最后一次修改state的机会
   // 功能二：相当于替代了componentWillReceiveProps的一部分作用
@@ -10,8 +10,9 @@ export default class App extends Component {
 	static getDerivedStateFromProps(nextProps, nextState) {
 		console.log("getDerivedStateFromProps", nextState);
 		return {
-			name: nextState.name
+			name: nextState.name || 'fredy'
 		};
+		// return null;
 	}
 	render() {
 		return (

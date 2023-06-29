@@ -26,18 +26,19 @@ import store from './05_react-redux/redux/store';
 // import App from './01_base/24.性能优化';
 // import App from './01_base/25.swiper组件';
 // import App from './02_hooks/1.useState';
+// import App from './02_hooks/2.useEffect';
 // import App from './02_hooks/3.useEffect2';
 // import App from './02_hooks/4.useCallback';
 // import App from './02_hooks/5.useMemo';
 // import App from './02_hooks/6.useRef';
-// import App from './02_hooks/7.useContext';
+import App from './02_hooks/7.useContext';
 // import App from './02_hooks/8.useReducer';
 // import App from './02_hooks/9.useReducer2';
 // import App from './03_router/App';
 // import App from "./04_redux/App";
 // import App from "./05_react-redux/App";
 // import App from './06_react-test/App'
-import App from './07_react补充/1.portal'
+// import App from './07_react补充/1.portal'
 
 // ReactDOM.render(<div>111</div>,document.getElementById('root'));
 
