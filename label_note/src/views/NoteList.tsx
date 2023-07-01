@@ -32,7 +32,7 @@ export default function NoteList({ availableTags, notes, onDeleteTag, onUpdateTa
 		<>
 			<Row className='align-items-center mb-4'>
 				<Col>
-					<h1>Notes</h1>
+					<h1>标签笔记</h1>
 				</Col>
 				<Col xs='auto'>
 					<Stack

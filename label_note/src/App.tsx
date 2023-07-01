@@ -76,8 +76,9 @@ function App() {
 	return (
 		<Container className='my-4'>
 			<Routes>
+				<Route path="/" element={<Navigate to='label-with-tag'></Navigate>}/>
 				<Route
-					path='/'
+					path='label-with-tag'
 					element={
 						<NoteList
 							notes={notesWithTags}
